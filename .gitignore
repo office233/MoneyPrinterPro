@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+
+# Environment (contains secrets)
+.env
+
+# Generated assets
+assets/generated/
+assets/reference/
+assets/ads/
+assets/outbox/
+assets/posted/
+assets/music/
+assets/reports/
+assets/*.log
+assets/*.json
+
+# User data
+personas/
+identity/
+data/
+
+# Logs
+*.log
+
+# Test artifacts
+test-*.png
+test-*.jpg
+test-*.mjs
+diagnostic*
+
+# Binary tools
+bin/
+
+# Legacy scripts
+auto-post.*
+run-agent.*

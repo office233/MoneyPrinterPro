@@ -1,0 +1,35 @@
+{
+  "name": "money-printer-pro",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Source-available AI image generator with persona identity preservation. BYOK (Bring Your Own Gemini API key).",
+  "license": "MIT",
+  "author": "office233",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/office233/money-printer-pro.git"
+  },
+  "homepage": "https://github.com/office233/money-printer-pro#readme",
+  "bugs": {
+    "url": "https://github.com/office233/money-printer-pro/issues"
+  },
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@google/genai": "^2.0.0",
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,99 @@
+# 💰 Money Printer Pro
+
+**Free, open-source AI image generator.** Create photorealistic images of any persona using Google Gemini — bring your own API key.
+
+![Money Printer Pro](https://img.shields.io/badge/Money_Printer-PRO-purple?style=for-the-badge&logo=sparkles)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
+
+## ✨ Features
+
+- 🖼️ **AI Image Generation** — Photorealistic images with optional reference-image identity preservation
+- 👤 **Persona System** — Upload one reference photo, get consistent identity across all generations
+- 🎨 **7 Visual Styles** — Lifestyle, Urban Power, Music, Travel, Executive, Luxury, Creative
+- 📐 **Smart Shot Selection** — Candid, portrait, full body, over-shoulder and more
+- 🔑 **Bring Your Own Key** — Each user enters their own Gemini key in the UI; the server never stores one
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/office233/money-printer-pro.git
+cd money-printer-pro
+npm install
+```
+
+### 2. Get a Gemini API Key
+
+1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
+2. Click **"Create API Key"**
+3. Copy the key
+
+### 3. Run
+
+```bash
+npm run dev
+```
+
+### 4. Configure
+
+1. Open `http://localhost:3000`
+2. Go to **⚙️ Settings**
+3. Paste your Gemini API key
+4. Click **Test Connection**
+
+That's it! Create a persona, upload a reference photo, and start generating. 🎉
+
+## 💰 Pricing (Pay-as-you-go to Google)
+
+You pay Google directly. No middleman. No markup.
+
+| What | Model | Cost |
+|------|-------|------|
+| Image (512px) | Gemini Flash Image | ~$0.045 |
+| Image (1024px) | Gemini Flash Image | ~$0.067 |
+| Image (2048px) | Gemini Flash Image | ~$0.101 |
+
+**$10 ≈ 150 images.** Your data stays on your machine.
+
+## 📁 Project Structure
+
+```
+money-printer-pro/
+├── src/app/              # Next.js pages
+│   ├── page.jsx          # Dashboard
+│   ├── settings/         # API key settings
+│   ├── generate/         # Generation page
+│   ├── personas/new/     # Create persona
+│   └── api/              # Backend routes
+├── assets/
+│   ├── reference/        # Reference photos (gitignored)
+│   └── generated/        # Generated content (gitignored)
+├── personas/             # Persona configs (gitignored)
+├── identity/             # Physical blueprints (gitignored)
+└── .env.example          # Environment template
+```
+
+## 🔒 Privacy & Security
+
+- **API keys live only in your browser's `localStorage`.** They are sent to the Next.js backend exclusively via the `x-api-key` request header so it can call Google on your behalf. The server never persists, logs, or shares your key.
+- **No server-side fallback key.** If no `x-api-key` header is present, the request is rejected with HTTP 401.
+- **All inputs are validated server-side** (persona slugs, filenames, upload MIME/extension, body size) to prevent path traversal and abuse.
+- **No telemetry, no tracking, no analytics.**
+- **Reference images and generated content stay on your machine** under `assets/`.
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js 16, React 19
+- **AI:** Google Gemini API (`@google/genai`)
+- **Styling:** Vanilla CSS (dark glassmorphism theme)
+- **Storage:** Local filesystem
+
+## 📝 License
+
+MIT — Use it however you want. Make money with it. 💰
+
+---
+
+**Made with ❤️ and AI**
