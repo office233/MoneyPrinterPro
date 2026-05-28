@@ -1,5 +1,7 @@
 # Persona Media Studio
 
+[![CI](https://github.com/office233/MoneyPrinterPro/actions/workflows/ci.yml/badge.svg)](https://github.com/office233/MoneyPrinterPro/actions/workflows/ci.yml)
+
 **Local-first AI creative pipeline** for persona-based image and video generation with identity preservation, prompt orchestration, and quality scoring.
 
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
@@ -109,6 +111,38 @@ Most AI image generators give you a prompt box and a button. Persona Media Studi
 - API keys stay user-controlled (bring-your-own-key model).
 - Generated assets are stored locally by default.
 - **Do not use this tool to generate non-consensual content of real people.**
+
+---
+
+## 🏗️ Architecture
+
+> How a single generation request flows through the system.
+
+```mermaid
+graph TD
+    A["👤 User selects Persona + Style"] --> B["🖥️ Frontend (Next.js)"]
+    B --> C["🔐 API Route — validate + check API key"]
+    C --> D["🧠 Prompt Orchestrator"]
+
+    D --> E1["💡 Lighting Engine"]
+    D --> E2["🌑 Shadow Engine"]
+    D --> E3["🎬 Motion Engine"]
+    D --> E4["🌦️ Weather Engine"]
+    D --> E5["👗 Outfit Engine"]
+    D --> E6["🎨 Visual Context"]
+
+    E1 --> F["📝 Assembled Prompt"]
+    E2 --> F
+    E3 --> F
+    E4 --> F
+    E5 --> F
+    E6 --> F
+
+    F --> G["🤖 Generation Service — Gemini / VEO API"]
+    G --> H["📊 Quality Scoring"]
+    H --> I["🗄️ Job Tracker (SQLite)"]
+    I --> J["✅ Result returned to UI"]
+```
 
 ---
 
