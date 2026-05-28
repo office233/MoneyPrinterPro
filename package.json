@@ -18,7 +18,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "@google/genai": "^2.0.0",
