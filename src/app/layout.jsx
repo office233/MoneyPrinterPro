@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  IconHome, IconUserPlus, IconSettings, IconGithub,
+  IconHome, IconUserPlus, IconSettings, IconGithub, IconSparkles,
 } from '@/components/icons';
 
 function ApiKeyBanner() {
@@ -23,6 +23,7 @@ function ApiKeyBanner() {
 
 const NAV = [
   { href: '/', label: 'Dashboard', icon: IconHome },
+  { href: '/autopilot', label: 'Autopilot', icon: IconSparkles },
   { href: '/personas/new', label: 'New persona', icon: IconUserPlus },
   { href: '/settings', label: 'Settings', icon: IconSettings },
 ];
@@ -33,7 +34,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
           <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <title>Money Printer Pro — AI image generator</title>
+        <title>Money Printer Pro — AI content generator</title>
         <meta name="description" content="Source-available AI image generator with persona identity preservation. Bring your own Gemini API key." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,7 +78,7 @@ export default function RootLayout({ children }) {
               >
                 <IconGithub size={13} /> Star on GitHub
               </a>
-              <span>v2.0 · BSL 1.1</span>
+              <span>v3.0 · BSL 1.1</span>
             </div>
           </aside>
 
