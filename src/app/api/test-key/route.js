@@ -1,15 +1,16 @@
 import { rateLimit } from '@/lib/rate-limit';
-  // Simple IP-based rate limiting
-  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-  if (!rateLimit(ip)) {
-    return NextResponse.json({ valid: false, error: 'Rate limit exceeded. Try again later.' }, { status: 429 });
-  }
 import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
+  // Simple IP-based rate limiting
+  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+  if (!rateLimit(ip)) {
+    return NextResponse.json({ valid: false, error: 'Rate limit exceeded. Try again later.' }, { status: 429 });
+  }
+
   const apiKey = request.headers.get('x-api-key')?.trim();
   if (!apiKey) {
     return NextResponse.json(
@@ -58,3 +59,4 @@ export async function POST(request) {
     );
   }
 }
+

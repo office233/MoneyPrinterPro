@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { GENERATED_DIR, ensureDir } from './personas.js';
+import { GENERATED_DIR, ensureDir } from '../personas.js';
 
 /**
  * VEO Video Generator — ported from D:\workspace\scripts\generate-veo-video.py
