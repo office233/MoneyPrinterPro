@@ -1,17 +1,16 @@
-# 💰 Money Printer Pro
+# Persona Media Studio
 
-**Open-source AI content generator.** Create photorealistic images and cinematic videos of any persona using Google Gemini + VEO 3.1 — with identity preservation, visual engines, and autopilot mode.
+**Local-first AI creative pipeline** for persona-based image and video generation with identity preservation, prompt orchestration, and quality scoring.
 
-![Money Printer Pro](https://img.shields.io/badge/Money_Printer-PRO_v3.0-purple?style=for-the-badge&logo=sparkles)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
-![Stars](https://img.shields.io/github/stars/office233/MoneyPrinterPro?style=for-the-badge&color=gold)
+![Stars](https://img.shields.io/github/stars/office233/PersonaMediaStudio?style=for-the-badge&color=gold)
 
 ---
 
 ## 📸 Generated Examples — Zero Manual Editing
 
-> Every image and video below was generated **100% by Money Printer Pro**. Same persona, consistent identity across all outputs.
+> Every image and video below was generated **100% by this pipeline**. Same persona, consistent identity across all outputs.
 
 ### AI-Generated Images
 
@@ -90,7 +89,7 @@ The pipeline can generate **multi-shot sequences** — multiple cinematic clips 
 
 ## 🔥 What Makes This Different
 
-Most AI image generators give you a prompt box and a button. Money Printer Pro is a **full content pipeline** — from prompt planning to quality scoring.
+Most AI image generators give you a prompt box and a button. Persona Media Studio is a **full content pipeline** — from prompt planning to quality scoring.
 
 - ✅ **Image + Video generation** — Gemini for images, VEO 3.1 for cinematic 9:16 video
 - ✅ **Identity preservation** — same face across all outputs using reference photos
@@ -100,6 +99,16 @@ Most AI image generators give you a prompt box and a button. Money Printer Pro i
 - ✅ **Autopilot mode** — batch generate with automatic planning
 - ✅ **Publish guard** — quality gate blocks low-quality outputs
 - ✅ **Your own API key** — pay Google directly, no middleman
+
+---
+
+## ⚠️ Responsible Use
+
+- This tool is intended for **user-owned or consented creative assets only**.
+- It does not include impersonation, scraping, or automated publishing features.
+- API keys stay user-controlled (bring-your-own-key model).
+- Generated assets are stored locally by default.
+- **Do not use this tool to generate non-consensual content of real people.**
 
 ---
 
@@ -178,7 +187,7 @@ uvicorn main:app --port 8000
 
 ---
 
-## 💰 Pricing (Pay Google Directly)
+## 💳 API Costs (Pay Google Directly)
 
 You pay Google directly. No middleman. No markup. No subscription.
 
@@ -245,6 +254,16 @@ money-printer-pro/
 - **All inputs validated server-side** — path traversal protection, MIME checking, body size limits.
 - **No telemetry, no tracking, no analytics.**
 - **Everything stays on your machine.**
+
+---
+
+## Current Limitations
+
+- The quality scoring service is experimental and requires manual setup.
+- Rate limiting is local/in-memory and not suitable for distributed deployment.
+- Production authentication and team-management features are not implemented.
+- Test coverage should be expanded before production use.
+- The video scoring pipeline requires additional Python dependencies.
 
 ---
 
