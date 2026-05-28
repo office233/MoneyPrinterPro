@@ -1,0 +1,51 @@
+{
+  "global": {
+    "max_posts_per_day": 3,
+    "min_hours_between_posts": 4,
+    "posting_hours": {
+      "morning": 9,
+      "afternoon": 14,
+      "evening": 20
+    }
+  },
+  "format_limits": {
+    "max_video_ai_per_day": 1,
+    "max_video_ai_per_week": 5,
+    "video_ratio_limit": 0.40,
+    "reel_ratio_target": 0.50,
+    "feed_ratio_target": 0.10
+  },
+  "brand_limits": {
+    "max_brand_per_day": 1,
+    "max_brand_per_week": 3,
+    "brand_ratio_limit": 0.15,
+    "min_days_between_brand": 2
+  },
+  "music_limits": {
+    "ava_only": true,
+    "max_music_per_week": 5,
+    "music_ratio_limit": 0.30
+  },
+  "pillar_rules": {
+    "max_same_pillar_in_row": 2,
+    "min_days_between_same_pillar": 3
+  },
+  "cost_control": {
+    "video_ai_cost_per_gen": 0.50,
+    "max_video_cost_per_week": 15.00,
+    "image_cost_per_gen": 0.02,
+    "max_image_cost_per_week": 5.00
+  },
+  "override_rules": {
+    "override_ignores": [
+      "brand_frequency",
+      "video_limit",
+      "pillar_ratio"
+    ],
+    "override_respects": [
+      "identity_lock",
+      "publish_guard",
+      "platform_limits"
+    ]
+  }
+}

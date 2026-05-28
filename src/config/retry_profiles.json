@@ -1,0 +1,77 @@
+{
+  "global": {
+    "max_retries": 2,
+    "cooldown_seconds": 60
+  },
+  "thresholds": {
+    "ava": {
+      "min_mean": 0.74,
+      "min_final": 0.74,
+      "min_confidence": "medium"
+    },
+    "selena": {
+      "min_mean": 0.78,
+      "min_final": 0.78,
+      "min_confidence": "medium"
+    },
+    "commercial": {
+      "min_mean": 0.88,
+      "min_final": 0.88,
+      "min_confidence": "high"
+    }
+  },
+  "corrections": {
+    "lighting_issue": {
+      "video": {
+        "reduce_motion": true,
+        "camera": "static",
+        "lighting_lock": "strong",
+        "strictness_boost": 0.10
+      },
+      "image": {
+        "simplify_lighting": true,
+        "strictness_boost": 0.05
+      }
+    },
+    "motion_issue": {
+      "video": {
+        "reduce_motion": true,
+        "camera": "static",
+        "motion_profile": "minimal"
+      },
+      "image": {
+        "force_stable_pose": true
+      }
+    },
+    "composition_issue": {
+      "video": {
+        "camera": "static",
+        "framing": "portrait_close"
+      },
+      "image": {
+        "force_shot": "portrait_close",
+        "face_framing_bias": "high"
+      }
+    },
+    "eye_issue": {
+      "video": {
+        "reduce_motion": true,
+        "gaze_lock": "direct"
+      },
+      "image": {
+        "force_eye_contact": true
+      }
+    },
+    "face_stability_issue": {
+      "video": {
+        "reduce_motion": true,
+        "camera": "static",
+        "strictness_boost": 0.12
+      },
+      "image": {
+        "strict_identity_lock": true,
+        "strictness_boost": 0.12
+      }
+    }
+  }
+}

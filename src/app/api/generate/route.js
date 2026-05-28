@@ -1,9 +1,4 @@
 import { rateLimit } from '@/lib/rate-limit';
-  // Simple IP-based rate limiting
-  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-  if (!rateLimit(ip)) {
-    return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 });
-  }
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
@@ -15,15 +10,16 @@ import {
   ensureDir,
 } from '@/lib/personas';
 import { validateGenerateBody } from '@/lib/validation';
+import { getDb } from '@/lib/db';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// 1 MB JSON cap — generate bodies are tiny; anything larger is abuse.
 const MAX_BODY_BYTES = 1 * 1024 * 1024;
 const MAX_RETRIES = 2;
 const RETRY_DELAY_MS = 10_000;
 
+// Fallback style prompts (used when engines are not available)
 const STYLE_PROMPTS = {
   lifestyle: 'natural lifestyle, candid moment, warm golden light, bokeh background',
   urban_power: 'urban city, confident stance, architectural background, street style, fashion',
@@ -47,14 +43,95 @@ const SHOT_PROMPTS = {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * Build strong identity lock prompt — ported from old pipeline's generate-image.cjs
+ * Much more detailed than the original simple version
+ */
 function buildIdentityPrompt(blueprint) {
   const s = blueprint?.physical_spec;
   if (!s) return '';
-  return `Person: ${s.face_shape} face, ${s.jawline} jaw, ${s.eyes} eyes, ${s.nose} nose, ${s.hair_default} hair, ${s.skin_tone} skin, ${s.body_type} body, appears ${s.age_appearance}.`;
+
+  const rules = blueprint?.identity_rules;
+  const forbidden = rules?.forbidden?.length
+    ? `\nDO NOT change hair color (forbidden: ${rules.forbidden.join(', ')}).`
+    : '';
+
+  return `CRITICAL IDENTITY LOCK - The person MUST be IDENTICAL to the reference image:
+- Face shape: ${s.face_shape}
+- Jawline: ${s.jawline}
+- Eyes: ${s.eyes}
+- Nose: ${s.nose}
+- Hair: ${s.hair_default}
+- Skin tone: ${s.skin_tone}
+- Body: ${s.body_type}
+- Age appearance: ${s.age_appearance}
+
+DO NOT alter facial bone structure.
+DO NOT change eye shape, eye color, or nose shape.${forbidden}
+Keep natural proportions.
+Same person as reference image - exact match required.`;
+}
+
+/**
+ * Try to build an engine-enhanced prompt with visual context
+ */
+async function tryBuildEnginePrompt(persona, style, shotType, location, blueprint) {
+  try {
+    const { buildVisualContext } = await import('@/lib/engines/visual-context.js');
+
+    // Build a scene object from the simple inputs
+    const scene = {
+      city: location || 'Urban City',
+      spot: location || 'premium urban setting',
+      category: style === 'music_life' ? 'music' : style === 'travel' ? 'travel' : 'urban',
+      time_of_day: 'golden_hour',
+      weather: 'clear',
+      outfit_description: 'stylish outfit matching the scene',
+    };
+
+    const shot = {
+      shot_archetype: shotType || 'three_quarter_candid',
+      shot_key: shotType || 'three_quarter_candid',
+      shot_tags: shotType || 'candid',
+      full_prompt: SHOT_PROMPTS[shotType] || '3/4 body, natural candid pose',
+    };
+
+    const visualContext = buildVisualContext({
+      persona,
+      pillar: style || 'lifestyle',
+      scene,
+      shot,
+      format: 'feed_static',
+    });
+
+    // Build full prompt with visual context (like old pipeline)
+    const identityPrompt = buildIdentityPrompt(blueprint);
+    const locationText = location || 'premium urban setting';
+
+    return `${identityPrompt}
+
+Generate an ultra-realistic photo of this EXACT person from the reference image.
+
+LOCATION: ${visualContext.scene?.city || locationText}, ${visualContext.scene?.spot || locationText}
+TIME: ${visualContext.resolved_time || 'golden_hour'}
+
+${visualContext.shot?.full_prompt || SHOT_PROMPTS[shotType] || '3/4 body, natural candid pose'}
+
+LIGHTING: ${visualContext.lighting_prompt || 'natural golden hour lighting'}
+SHADOW DIRECTION: ${visualContext.shadow_prompt || 'soft directional shadows'}
+${visualContext.weather_prompt || ''}
+MOTION: ${visualContext.motion_prompt || 'still pose'}
+
+Style: natural photo, 9:16 portrait, visible skin texture, sharp background, candid moment aesthetic.
+The person MUST be identical to the reference image.`;
+  } catch (err) {
+    // Engines not available — fall back to simple prompt
+    console.warn('[generate] Engine-enhanced prompt unavailable, using fallback:', err.message);
+    return null;
+  }
 }
 
 async function readJsonBody(request) {
-  // Hard cap before parsing so a giant body cannot exhaust memory.
   const len = Number(request.headers.get('content-length') || 0);
   if (len > MAX_BODY_BYTES) {
     const err = new Error('Request body too large');
@@ -128,7 +205,44 @@ function formatGeminiError(err) {
   return new Error('Gemini generation failed. Please try again.');
 }
 
+/**
+ * Save job to database
+ */
+function saveJob(data) {
+  try {
+    const db = getDb();
+    const stmt = db.prepare(`
+      INSERT INTO jobs (persona, output_type, style, shot_type, status, image_path, prompt, model, duration_ms, cost_estimate, error)
+      VALUES (@persona, @outputType, @style, @shotType, @status, @imagePath, @prompt, @model, @durationMs, @costEstimate, @error)
+    `);
+    const result = stmt.run({
+      persona: data.persona,
+      outputType: data.outputType || 'image',
+      style: data.style || null,
+      shotType: data.shotType || null,
+      status: data.status || 'done',
+      imagePath: data.imagePath || null,
+      prompt: data.prompt || null,
+      model: data.model || null,
+      durationMs: data.durationMs || null,
+      costEstimate: data.costEstimate || null,
+      error: data.error || null,
+    });
+    return result.lastInsertRowid;
+  } catch (err) {
+    // DB errors should not break generation
+    console.error('[generate] DB save error:', err.message);
+    return null;
+  }
+}
+
 export async function POST(request) {
+  // Rate limiting
+  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+  if (!rateLimit(ip)) {
+    return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 });
+  }
+
   const startTime = Date.now();
 
   const apiKey = request.headers.get('x-api-key')?.trim();
@@ -161,14 +275,27 @@ export async function POST(request) {
       readBlueprint(persona),
     ]);
 
-    const styleText = STYLE_PROMPTS[style] || STYLE_PROMPTS.lifestyle;
-    const shotText = shotType && SHOT_PROMPTS[shotType]
-      ? SHOT_PROMPTS[shotType]
-      : '3/4 body, natural candid pose';
-    const locationText = location || 'premium urban setting';
+    // Try engine-enhanced prompt first, fall back to simple prompt
+    let fullPrompt;
+    let usedEngines = false;
 
-    const fullPrompt = customPrompt ||
-      `Ultra-realistic photo of a person. ${buildIdentityPrompt(blueprint)} ${shotText}. Location: ${locationText}. ${styleText}. Cinematic color grading, natural skin texture, sharp detail, 9:16 portrait, professional photography.`;
+    if (customPrompt) {
+      fullPrompt = customPrompt;
+    } else {
+      const enginePrompt = await tryBuildEnginePrompt(persona, style, shotType, location, blueprint);
+      if (enginePrompt) {
+        fullPrompt = enginePrompt;
+        usedEngines = true;
+      } else {
+        // Fallback to original simple prompt
+        const styleText = STYLE_PROMPTS[style] || STYLE_PROMPTS.lifestyle;
+        const shotText = shotType && SHOT_PROMPTS[shotType]
+          ? SHOT_PROMPTS[shotType]
+          : '3/4 body, natural candid pose';
+        const locationText = location || 'premium urban setting';
+        fullPrompt = `Ultra-realistic photo of a person. ${buildIdentityPrompt(blueprint)} ${shotText}. Location: ${locationText}. ${styleText}. Cinematic color grading, natural skin texture, sharp detail, 9:16 portrait, professional photography.`;
+      }
+    }
 
     const modelUsed = process.env.IMAGE_MODEL || 'gemini-2.5-flash-image';
     const imageBuffer = await generateWithGemini(apiKey, fullPrompt, refPath);
@@ -176,27 +303,57 @@ export async function POST(request) {
     const filename = `${persona}-${Date.now()}.png`;
     await fs.writeFile(path.join(GENERATED_DIR, filename), imageBuffer);
 
+    const durationMs = Date.now() - startTime;
+
+    // Save job to database
+    const jobId = saveJob({
+      persona,
+      outputType,
+      style,
+      shotType,
+      status: 'done',
+      imagePath: filename,
+      prompt: fullPrompt.slice(0, 2000), // truncate for DB
+      model: modelUsed,
+      durationMs,
+      costEstimate: 0.045, // ~$0.045 per 512px image
+    });
+
     return NextResponse.json({
       success: true,
+      jobId,
       persona,
       outputType,
       style,
       provider: 'gemini',
+      usedEngines,
       imageUrl: `/api/files/${filename}`,
-      duration_ms: Date.now() - startTime,
+      duration_ms: durationMs,
       model: modelUsed,
     });
   } catch (err) {
-    // Gemini-friendly messages are pre-sanitized by formatGeminiError.
-    // Other failures get a generic message; full error stays in server logs only
-    // so we never leak filesystem paths from path.join / fs errors to clients.
+    const durationMs = Date.now() - startTime;
+
+    // Save failed job to database
+    saveJob({
+      persona,
+      outputType,
+      style,
+      shotType,
+      status: 'failed',
+      prompt: customPrompt?.slice(0, 2000),
+      model: process.env.IMAGE_MODEL || 'gemini-2.5-flash-image',
+      durationMs,
+      error: err?.message?.slice(0, 500),
+    });
+
     console.error('[generate] error:', err);
     const safeMessage =
       err?.message && !/[\\/:]/.test(err.message)
         ? err.message
         : 'Generation failed. Check server logs.';
     return NextResponse.json(
-      { error: safeMessage, duration_ms: Date.now() - startTime },
+      { error: safeMessage, duration_ms: durationMs },
       { status: 500 },
     );
   }

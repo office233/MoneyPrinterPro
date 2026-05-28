@@ -1,0 +1,22 @@
+{
+  "on_stage_performance": ["music"],
+  "studio_creation": ["music"],
+  "three_quarter_candid": ["urban", "indoor", "travel", "nature"],
+  "full_body_walk": ["urban", "travel", "nature"],
+  "portrait_close": ["urban", "indoor", "travel", "nature"],
+  "portrait_three_quarter": ["urban", "indoor", "travel"],
+  "seated_luxe": ["indoor", "travel"],
+  "rooftop_pose": ["urban"],
+  "elevator_mirror": ["urban", "indoor"],
+  "over_shoulder": ["urban", "nature"],
+  "hands_detail": ["urban", "indoor"],
+  "editorial_portrait": ["urban", "indoor", "travel"],
+  "luxury_three_quarter": ["urban", "indoor", "travel"],
+  "penthouse_balcony_pose": ["urban", "indoor"],
+  "yacht_soft_glam": ["travel"],
+  "private_jet_entry": ["travel"],
+  "luxury_hotel_lobby": ["indoor", "travel"],
+  "full_body_editorial": ["urban", "indoor"],
+  "champagne_moment": ["indoor", "travel"],
+  "mirror_luxury": ["indoor", "travel"]
+}

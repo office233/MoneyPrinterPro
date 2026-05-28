@@ -1,0 +1,46 @@
+{
+  "ava": {
+    "urban_power": {
+      "category": "urban",
+      "vibe": "power_urban"
+    },
+    "music_life": {
+      "category": "music",
+      "vibe": "music_creation"
+    },
+    "executive": {
+      "category": "indoor",
+      "vibe": "executive"
+    },
+    "travel": {
+      "category": "travel",
+      "vibe": "status_travel"
+    },
+    "nature_escape": {
+      "category": "nature",
+      "vibe": "quiet_power"
+    }
+  },
+  "selena": {
+    "luxury_editorial": {
+      "category": "indoor",
+      "vibe": "lux_interior"
+    },
+    "yacht_travel": {
+      "category": "travel",
+      "vibe": "vip_motion"
+    },
+    "penthouse_elegance": {
+      "category": "indoor",
+      "vibe": "lux_interior"
+    },
+    "beach_glam": {
+      "category": "nature",
+      "vibe": "elevated_calm"
+    },
+    "private_jet": {
+      "category": "travel",
+      "vibe": "elite_escape"
+    }
+  }
+}

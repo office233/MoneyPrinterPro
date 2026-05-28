@@ -1,0 +1,46 @@
+{
+  "clear sky": {
+    "lighting": "natural daylight",
+    "outfit_modifier": null,
+    "prompt_modifier": "clear natural lighting, sharp shadows"
+  },
+  "cloudy sky": {
+    "lighting": "soft diffused",
+    "outfit_modifier": null,
+    "prompt_modifier": "soft diffused overcast lighting, no harsh shadows"
+  },
+  "golden hour clear": {
+    "lighting": "golden warm",
+    "outfit_modifier": null,
+    "prompt_modifier": "golden hour warm lighting, cinematic rim light"
+  },
+  "blue hour clear": {
+    "lighting": "cool twilight",
+    "outfit_modifier": null,
+    "prompt_modifier": "blue hour twilight lighting, soft ambient glow"
+  },
+  "light clouds": {
+    "lighting": "soft natural",
+    "outfit_modifier": null,
+    "prompt_modifier": "soft natural lighting with light clouds"
+  },
+  "light rain": {
+    "lighting": "soft grey",
+    "required_keywords": ["coat", "jacket", "trench", "blazer", "umbrella"],
+    "forbidden_keywords": ["silk", "satin", "linen"],
+    "outfit_modifier": "add structured outerwear",
+    "prompt_modifier": "soft grey rainy atmosphere, wet pavement reflections, rain protection visible"
+  },
+  "heavy rain reflections": {
+    "lighting": "dramatic grey",
+    "required_keywords": ["coat", "jacket", "trench", "umbrella"],
+    "forbidden_keywords": ["silk", "satin", "crop top"],
+    "outfit_modifier": "add heavy weather protection",
+    "prompt_modifier": "dramatic rain atmosphere, strong wet reflections, heavy rain visible"
+  },
+  "windy day": {
+    "lighting": "natural bright",
+    "outfit_modifier": "controlled hair movement",
+    "prompt_modifier": "natural bright lighting, subtle wind movement in fabric"
+  }
+}

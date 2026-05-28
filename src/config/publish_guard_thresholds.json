@@ -1,0 +1,28 @@
+{
+  "ava": {
+    "default": {
+      "min_mean": 0.74,
+      "min_final": 0.74,
+      "min_confidence": "medium"
+    },
+    "performance": {
+      "min_mean": 0.76,
+      "min_final": 0.76,
+      "min_confidence": "medium"
+    }
+  },
+  "selena": {
+    "default": {
+      "min_mean": 0.78,
+      "min_final": 0.78,
+      "min_confidence": "medium"
+    }
+  },
+  "commercial": {
+    "any": {
+      "min_mean": 0.88,
+      "min_final": 0.88,
+      "min_confidence": "high"
+    }
+  }
+}
