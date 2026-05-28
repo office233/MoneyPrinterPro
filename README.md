@@ -1,6 +1,6 @@
 # 💰 Money Printer Pro
 
-**The most powerful open-source AI content generator.** Create photorealistic images and cinematic videos of any persona using Google Gemini + VEO 3.1 — fully autonomous content pipeline.
+**Open-source AI content generator.** Create photorealistic images and cinematic videos of any persona using Google Gemini + VEO 3.1 — with identity preservation, visual engines, and autopilot mode.
 
 ![Money Printer Pro](https://img.shields.io/badge/Money_Printer-PRO_v3.0-purple?style=for-the-badge&logo=sparkles)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
@@ -90,20 +90,16 @@ The pipeline can generate **multi-shot sequences** — multiple cinematic clips 
 
 ## 🔥 What Makes This Different
 
-Most AI image generators give you a prompt box and a button. Money Printer Pro is a **full autonomous content pipeline** — the same system used to run AI-powered social media accounts.
+Most AI image generators give you a prompt box and a button. Money Printer Pro is a **full content pipeline** — from prompt planning to quality scoring.
 
-| Feature | Other Tools | Money Printer Pro |
-|---------|:-----------:|:-----------------:|
-| Image generation | ✅ | ✅ |
-| Video generation (VEO 3.1) | ❌ | ✅ |
-| Multi-shot video sequences | ❌ | ✅ |
-| Identity preservation (same face) | ❌ | ✅ |
-| 7 visual engines (lighting, shadow, motion...) | ❌ | ✅ |
-| AI quality scoring (5 channels) | ❌ | ✅ |
-| Smart content planner (anti-repeat) | ❌ | ✅ |
-| Autopilot mode (batch generation) | ❌ | ✅ |
-| Publish guard (quality gate) | ❌ | ✅ |
-| Your own API key (no middleman) | ❌ | ✅ |
+- ✅ **Image + Video generation** — Gemini for images, VEO 3.1 for cinematic 9:16 video
+- ✅ **Identity preservation** — same face across all outputs using reference photos
+- ✅ **7 visual engines** — lighting, shadow, motion, weather, outfit, scene validation, visual context
+- ✅ **Smart content planner** — weighted pillar selection, anti-repeat scene picker, caption generator
+- ✅ **AI quality scoring** — 5-channel analysis (face, eyes, lighting, motion, composition)
+- ✅ **Autopilot mode** — batch generate with automatic planning
+- ✅ **Publish guard** — quality gate blocks low-quality outputs
+- ✅ **Your own API key** — pay Google directly, no middleman
 
 ---
 
@@ -254,10 +250,8 @@ money-printer-pro/
 
 ## 📝 License
 
-MIT — Use it however you want. Make money with it. 💰
+MIT — Use it however you want.
 
 ---
 
-**⭐ Star this repo if you're making money with AI-generated content!**
-
-**Made with ❤️ and AI**
+**⭐ Star this repo if you find it useful!**
