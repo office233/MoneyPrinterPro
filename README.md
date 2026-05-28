@@ -9,36 +9,82 @@
 
 ---
 
-## 📸 See It In Action
+## 📸 Generated Examples — Zero Manual Editing
 
-> All content below was generated entirely by Money Printer Pro — zero manual editing
+> Every image and video below was generated **100% by Money Printer Pro**. Same persona, consistent identity across all outputs.
 
-<p align="center">
-  <img src="examples/preview.jpeg" width="350" alt="Generated with Money Printer Pro" />
-</p>
+### AI-Generated Images
 
 <p align="center">
-  <strong>🎬 Video Demos — AI-generated cinematic fashion videos</strong>
+  <img src="examples/ava-urban-1.png" width="240" />
+  <img src="examples/ava-urban-2.png" width="240" />
+  <img src="examples/ava-lifestyle-1.png" width="240" />
 </p>
+<p align="center">
+  <img src="examples/ava-lifestyle-2.png" width="240" />
+  <img src="examples/ava-lifestyle-3.png" width="240" />
+  <img src="examples/ava-executive-1.png" width="240" />
+</p>
+<p align="center">
+  <img src="examples/ava-travel-1.png" width="240" />
+  <img src="examples/preview.jpeg" width="240" />
+</p>
+
+> 👆 8 images, 1 persona, different styles — **the face stays consistent** because of our identity lock engine.
+
+### 🎬 AI-Generated Videos (VEO 3.1)
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="examples/demo-1.mp4">
-        <img src="https://img.shields.io/badge/▶_Demo_1-Watch_Video-red?style=for-the-badge&logo=youtube" />
+      <a href="examples/demo-veo.mp4">
+        <img src="https://img.shields.io/badge/▶_VEO_Video-8s_Cinematic-red?style=for-the-badge&logo=youtube" />
       </a>
-      <br/><sub>Urban lifestyle · VEO 3.1</sub>
+      <br/><sub>Image → 8s video · VEO 3.1</sub>
+    </td>
+    <td align="center">
+      <a href="examples/demo-1.mp4">
+        <img src="https://img.shields.io/badge/▶_Demo_1-Fashion_Reel-red?style=for-the-badge&logo=youtube" />
+      </a>
+      <br/><sub>Urban lifestyle</sub>
     </td>
     <td align="center">
       <a href="examples/demo-2.mp4">
-        <img src="https://img.shields.io/badge/▶_Demo_2-Watch_Video-red?style=for-the-badge&logo=youtube" />
+        <img src="https://img.shields.io/badge/▶_Demo_2-Editorial-red?style=for-the-badge&logo=youtube" />
       </a>
-      <br/><sub>Fashion editorial · VEO 3.1</sub>
+      <br/><sub>Fashion editorial</sub>
     </td>
   </tr>
 </table>
 
-> ⭐ **If you like this project, give it a star on GitHub!** It helps others discover it.
+### 🎞️ Multi-Shot Video Sequences
+
+The pipeline can generate **multi-shot sequences** — multiple cinematic clips from different angles, seamlessly chained:
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="examples/sequence-hook.mp4">
+        <img src="https://img.shields.io/badge/Shot_1-Hook_Close-blueviolet?style=for-the-badge" />
+      </a>
+      <br/><sub>Close-up hook shot</sub>
+    </td>
+    <td align="center">
+      <a href="examples/sequence-portrait.mp4">
+        <img src="https://img.shields.io/badge/Shot_2-Mid_Portrait-blueviolet?style=for-the-badge" />
+      </a>
+      <br/><sub>Mid-range portrait</sub>
+    </td>
+    <td align="center">
+      <a href="examples/sequence-movement.mp4">
+        <img src="https://img.shields.io/badge/Shot_3-Movement_Track-blueviolet?style=for-the-badge" />
+      </a>
+      <br/><sub>Movement tracking</sub>
+    </td>
+  </tr>
+</table>
+
+> ⭐ **If this is useful to you, give it a star!** It helps others discover it.
 
 ---
 
@@ -50,7 +96,8 @@ Most AI image generators give you a prompt box and a button. Money Printer Pro i
 |---------|:-----------:|:-----------------:|
 | Image generation | ✅ | ✅ |
 | Video generation (VEO 3.1) | ❌ | ✅ |
-| Identity preservation (same face every time) | ❌ | ✅ |
+| Multi-shot video sequences | ❌ | ✅ |
+| Identity preservation (same face) | ❌ | ✅ |
 | 7 visual engines (lighting, shadow, motion...) | ❌ | ✅ |
 | AI quality scoring (5 channels) | ❌ | ✅ |
 | Smart content planner (anti-repeat) | ❌ | ✅ |
@@ -174,6 +221,7 @@ money-printer-pro/
 │   └── publish-guard.js      # Quality gate
 ├── src/config/               # Engine config JSONs
 ├── scoring-service/          # Python FastAPI scoring
+├── examples/                 # Generated examples (in repo)
 ├── assets/                   # Reference & generated (gitignored)
 └── data/                     # SQLite database (gitignored)
 ```
