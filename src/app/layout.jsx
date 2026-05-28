@@ -31,7 +31,7 @@ const NAV = [
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
           <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <title>Money Printer Pro — AI content generator</title>
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <div className="app">
           <aside className="sidebar">
             <div className="brand">
