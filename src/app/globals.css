@@ -243,7 +243,7 @@ a { color: inherit; text-decoration: none; }
 /* ─── Stat tiles ─── */
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px;
   margin-bottom: 28px;
 }
@@ -358,6 +358,18 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg-overlay);
 }
 .textarea { resize: vertical; min-height: 72px; font-family: inherit; }
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2362666d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+select.input option {
+  background: var(--bg-overlay);
+  color: var(--fg);
+}
 
 .input-mono { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.01em; }
 
