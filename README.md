@@ -6,6 +6,16 @@
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
 
+## 📸 Examples
+
+> Generated with Money Printer Pro + Google Gemini
+
+<p align="center">
+  <img src="examples/preview.jpeg" width="300" />
+</p>
+
+🎬 **Video demos:** [Demo 1](examples/demo-1.mp4) · [Demo 2](examples/demo-2.mp4)
+
 ## ✨ Features
 
 - 🖼️ **AI Image Generation** — Photorealistic images with optional reference-image identity preservation
